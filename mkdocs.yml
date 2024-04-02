@@ -1,0 +1,53 @@
+site_name: Arista ATD v3
+site_url: https://github.com/hazardsg/atd-mkdocs-labguides/
+theme:
+  name: material
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - toc.integrate
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.tabs.link
+    - content.code.annotation
+    - content.code.copy
+    - content.code.select
+  language: en
+
+  plugins:
+  - search
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - admonition
+  - pymdownx.arithmatex:
+      generic: true
+  - footnotes
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.mark
+  - attr_list
+  - md_in_html
+
+# Page tree
+nav:
+  - Home: index.md
+  - EOS Configuration:
+    - Connecting: connecting.md
+    - Layer 2 Leaf-Spine: l2ls.md
+  - CloudVision Portal:
+    - CVP Configlet, Change Control, and Rollback: cvp_configlet.md
+  - Programmability:
+    - Connecting to your lab machine: programmability_connecting.md
+  - Broadcaster Training:
+    - Media Intro to IP Lab: media_ip_intro.md
+  - Troubleshooting Training:
+    - Troubleshooting Introduction: tshoot_intro.md
+  - Arista Graduate:
+    - CloudVision Initial Configuration: ag_initial_configuration.md
