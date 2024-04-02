@@ -11,7 +11,7 @@ been defined for AAA and VLANs.
     don't have one, please see your ATD staff.
 
 ::: {.thumbnail align="center" title="This your lab access page. You can access your topology from here or copy your unique lab address to use with an ssh client."}
-images/cvp_configlet/nested_cvp_overview_1.png
+../images/cvp_configlet/nested_cvp_overview_1.png
 :::
 
 | 
@@ -23,7 +23,7 @@ images/cvp_configlet/nested_cvp_overview_1.png
 | 
 
 ::: {.thumbnail align="center" title="This is the main landing page for your lab. From here you can browse to CVP, Console Access (in your browser), click the individual icons to SSH to them, and access the Lab Guides."}
-images/cvp_configlet/nested_cvp_landing_1.png
+../images/cvp_configlet/nested_cvp_landing_1.png
 :::
 
 | 
@@ -48,7 +48,7 @@ images/cvp_configlet/nested_cvp_landing_1.png
 | 
 
 ::: {.thumbnail align="center" title="Creating the Alias configlet"}
-images/cvp_configlet/cvp_configlet_1.gif
+../images/cvp_configlet/cvp_configlet_1.gif
 :::
 
 | 
@@ -62,7 +62,7 @@ images/cvp_configlet/cvp_configlet_1.gif
 | 
 
 ::: {.thumbnail align="center" title="Assigning the Alias configlet we just created."}
-images/cvp_configlet/cvp_configlet_2.gif
+../images/cvp_configlet/cvp_configlet_2.gif
 :::
 
 | 
@@ -84,7 +84,7 @@ images/cvp_configlet/cvp_configlet_2.gif
 | 
 
 ::: {.thumbnail align="center" title="Creating a basic Change Control and running it to push the Alias to the devices."}
-images/cvp_configlet/cvp_configlet_3.gif
+../images/cvp_configlet/cvp_configlet_3.gif
 :::
 
 | 
@@ -143,7 +143,7 @@ Not a problem, let\'s quickly do a Rollback.
 | 
 
 ::: {.thumbnail align="center" title="location of the Rollback button"}
-images/cvp_configlet/cvp_configlet_4.png
+../images/cvp_configlet/cvp_configlet_4.png
 :::
 
 | 
@@ -155,7 +155,7 @@ images/cvp_configlet/cvp_configlet_4.png
 | 
 
 ::: {.thumbnail align="center" title="This is the rollback confirmation page where you can select the specific tasks you would like to roll back"}
-images/cvp_configlet/cvp_configlet_5.png
+../images/cvp_configlet/cvp_configlet_5.png
 :::
 
 | 

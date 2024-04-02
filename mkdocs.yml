@@ -53,15 +53,16 @@ markdown_extensions:
 nav:
   - Home: index.md
   - EOS Configuration:
-    - Connecting: connecting.md
-    - Layer 2 Leaf-Spine: l2ls.md
+    - Connecting: eos_configuration/connecting.md
+    - Layer 2 Leaf-Spine: eos_configuration/l2ls.md
+    - Layer 3 Leaf-Spine: eos_configuration/l3ls.md
   - CloudVision Portal:
-    - CVP Configlet, Change Control, and Rollback: cvp_configlet.md
+    - CVP Configlet, Change Control, and Rollback: cloudvision_portal/cvp_configlet.md
   - Programmability:
-    - Connecting to your lab machine: programmability_connecting.md
+    - Connecting to your lab machine: programmability/programmability_connecting.md
   - Broadcaster Training:
-    - Media Intro to IP Lab: media_ip_intro.md
+    - Media Intro to IP Lab: broadcaster_training/media_ip_intro.md
   - Troubleshooting Training:
-    - Troubleshooting Introduction: tshoot_intro.md
+    - Troubleshooting Introduction: troubleshoot_training/tshoot_intro.md
   - Arista Graduate:
-    - CloudVision Initial Configuration: ag_initial_configuration.md
+    - CloudVision Initial Configuration: arista_graduate/ag_initial_configuration.md

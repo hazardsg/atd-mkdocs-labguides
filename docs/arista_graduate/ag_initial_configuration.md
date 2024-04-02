@@ -19,7 +19,7 @@ or by clicking on \"Console Access\" on the main ATD screen. Log in with
 the arista user and the auto-generated password
 
 ::: thumbnail
-images/aa-initial_configuration/initial-config-1.png
+../images/aa-initial_configuration/initial-config-1.png
 :::
 
 | 
@@ -324,7 +324,7 @@ Valid config.
     screen and click on the **CVP** link.
 
 ::: {.thumbnail width="50%"}
-images/aa-initial_configuration/initial-config-3.png
+../images/aa-initial_configuration/initial-config-3.png
 :::
 
 | 
@@ -340,7 +340,7 @@ images/aa-initial_configuration/initial-config-3.png
     **Finish**.
 
 ::: {.thumbnail width="80%"}
-images/aa-initial_configuration/initial-config-4.png
+../images/aa-initial_configuration/initial-config-4.png
 :::
 
 | 
@@ -357,7 +357,7 @@ images/aa-initial_configuration/initial-config-4.png
     **network operator** to set up the network-operator account.
 
 ::: {.thumbnail width="70%"}
-images/aa-initial_configuration/initial-config-5.png
+../images/aa-initial_configuration/initial-config-5.png
 :::
 
 | 
@@ -373,7 +373,7 @@ images/aa-initial_configuration/initial-config-5.png
     from arista.com and click **Save**
 
 ::: thumbnail
-images/aa-initial_configuration/initial-config-6.png
+../images/aa-initial_configuration/initial-config-6.png
 :::
 
 | 
@@ -394,7 +394,7 @@ click on **Support \> Software Downloads** and browse to **CloudVision
 **AlertBase-CVP.json** file (as seen in the screenshot below)
 
 ::: thumbnail
-images/aa-initial_configuration/initial-config-7.png
+../images/aa-initial_configuration/initial-config-7.png
 :::
 
 :::: note

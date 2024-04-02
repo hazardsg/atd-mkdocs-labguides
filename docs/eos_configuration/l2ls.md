@@ -1,6 +1,6 @@
 # Layer 2 Leaf-Spine
 
-  ![Image title](images/l2ls/nested_l2ls_topo.png)
+  ![Image title](../images/l2ls/nested_l2ls_topo.png)
   
   1.  Log into the **LabAccess** jumpserver to prepare the lab
     environment:

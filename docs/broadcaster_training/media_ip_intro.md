@@ -1,6 +1,6 @@
 # Media Intro to IP Lab
 
-![image](images/media_intro/media_ip_intro.png){.align-center}
+![image](../images/media_intro/media_ip_intro.png){.align-center}
 
 :::: note
 ::: title

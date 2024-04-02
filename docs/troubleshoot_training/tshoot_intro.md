@@ -1,6 +1,6 @@
 # Troubleshooting Introduction
 
-![image](images/tshoot_intro/tshoot_intro_1.png){.align-center}
+![image](../images/tshoot_intro/tshoot_intro_1.png){.align-center}
 
 :::: note
 ::: title

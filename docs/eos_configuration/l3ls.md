@@ -1,71 +1,51 @@
 # Layer 3 Leaf-Spine
 
-::: {.thumbnail align="center"}
-images/l3ls/nested_l3ls_topo_1.png
+![Image title](../images/l3ls/nested_l3ls_topo_1.png)
 
-Click image to enlarge
-:::
-
-:::: note
-::: title
-Note
-:::
-
-The manually-entered commands below that are part of this lab are
-equivalent to `L3LS_s1-leaf4_complete`.
-::::
+???+ note
+    The manually-entered commands below that are part of this lab are
+    equivalent to `L3LS_s1-leaf4_complete`.
 
 1.  Log into the **LabAccess** jumpserver:
+    1.  Type `l3ls` at the prompt. The script will configure the
+     datacenter with the exception of **s1-leaf4**.
 
-    a.  Type `l3ls` at the prompt. The script will configure the
-        datacenter with the exception of **s1-leaf4**.
-
-        :::: note
-        ::: title
-        Note
-        :::
-
+    ???+ note
         Did you know the "l3ls" script is composed of Python code that
         uses the CloudVision Portal REST API to automate the
         provisioning of CVP Configlets. The configlets that are
         configured via the REST API are `L3LS_s1-spine1`,
         `L3LS_s1-spine2`, `L3LS_s1-leaf1`, `L3LS_s1-leaf2`,
         `L3LS_s1-leaf3`, `L3LS_s1-leaf4`.
-        ::::
 
 2.  Configure SVI and VARP Virtual IP on the **s1-leaf4** switch using
     the following criteria
 
-    a.  Create the vARP MAC Address in Global Configuration mode
+    1.  Create the vARP MAC Address in Global Configuration mode
 
-        :::: note
-        ::: title
-        Note
-        :::
-
-        Arista EOS utilizes the Industry-Standard CLI. When entering
-        configuration commands, be sure to first type `configure` to
-        enter configuration mode.
-        ::::
+        ???+ note
+            Arista EOS utilizes the Industry-Standard CLI. When entering
+            configuration commands, be sure to first type `configure` to
+            enter configuration mode.
 
         ``` text
         ip virtual-router mac-address 00:1c:73:00:00:34
         ```
 
-    b.  Create the VLAN, SVI and the Virtual Router Address
+    2.  Create the VLAN, SVI and the Virtual Router Address
 
         ``` text
         vlan 134
-           name Host_Network_134
+            name Host_Network_134
         !
         interface vlan 134
-           ip address 10.111.134.3/24
-           ip virtual-router address 10.111.134.1
+            ip address 10.111.134.3/24
+            ip virtual-router address 10.111.134.1
         ```
 
-    c.  Validate the configuration with the following:
+    3.  Validate the configuration with the following:
 
-        ``` {.text emphasize-lines="1,9"}
+        ``` text hl_lines="1 9"
         s1-leaf4#show ip interface brief 
                                                                                        Address
         Interface         IP Address            Status       Protocol           MTU    Owner  
@@ -90,28 +70,28 @@ equivalent to `L3LS_s1-leaf4_complete`.
 3.  Configure BGP on the **s1-leaf4** switch using the following
     criteria
 
-    a.  Based on the diagram, configure L3 interfaces to
+    1.  Based on the diagram, configure L3 interfaces to
         **s1-spine1/s1-spine2** and interface Loopback0
 
         ``` text
         interface Ethernet2
-           description L3 Uplink - s1-spine1
-           no switchport
-           ip address 10.111.1.7/31
+            description L3 Uplink - s1-spine1
+            no switchport
+            ip address 10.111.1.7/31
         !
         interface Ethernet3
-           description L3 Uplink - s1-spine2
-           no switchport
-           ip address 10.111.2.7/31
+            description L3 Uplink - s1-spine2
+            no switchport
+            ip address 10.111.2.7/31
         !
         interface Loopback0
-           description Management and Router-id
-           ip address 10.111.254.4/32
+            description Management and Router-id
+            ip address 10.111.254.4/32
         ```
 
-    b.  Validate the configuration with the following:
+    2.  Validate the configuration with the following:
 
-        ``` {.text emphasize-lines="1"}
+        ``` text hl_lines="1"
         s1-leaf4#show ip interface brief
                                                                                       Address
         Interface         IP Address            Status       Protocol            MTU    Owner  
@@ -124,20 +104,16 @@ equivalent to `L3LS_s1-leaf4_complete`.
         Vlan4094          10.255.255.2/30       up           up                 1500           
         ```
 
-    c.  Based on the diagram, turn on BGP and configure the neighbor
+    3.  Based on the diagram, turn on BGP and configure the neighbor
         relationships on **s1-leaf4**. eBGP to **s1-spine1/s1-spine2**
         and iBGP to **s1-leaf3**.
 
-        :::: note
-        ::: title
-        Note
-        :::
+        ???+ note
+            We are using a peer group to configure the neighbor attributes
+            for the spines. This allows us to apply all bgp attributes
+            within a group to each neighbor that is a member in a scalable
+            method.
 
-        We are using a peer group to configure the neighbor attributes
-        for the spines. This allows us to apply all bgp attributes
-        within a group to each neighbor that is a member in a scalable
-        method.
-        ::::
 
         ``` text
         router bgp 65102
@@ -150,26 +126,21 @@ equivalent to `L3LS_s1-leaf4_complete`.
            neighbor 10.255.255.1 remote-as 65102
            neighbor 10.255.255.1 next-hop-self
         ```
+        ???+ note
+            Since `neighbor 10.255.255.1 remote-as 65102` specifies an iBGP
+            peering relationship (because the ASN is the same as this switch
+            `65102`), the receiving switch may not have a route to networks
+            more than 1 hop away, hence the switches should each advertise
+            that they are the next hop via the
+            `neighbor 10.255.255.1 next-hop-self` statement. While this
+            scenario is only 2 iBGP peers, in a network fabric with several
+            iBGP peers, a switch inside an AS (and not on an edge) may not
+            have a route to a switch in any external AS.
 
-        :::: note
-        ::: title
-        Note
-        :::
 
-        Since `neighbor 10.255.255.1 remote-as 65102` specifies an iBGP
-        peering relationship (because the ASN is the same as this switch
-        `65102`), the receiving switch may not have a route to networks
-        more than 1 hop away, hence the switches should each advertise
-        that they are the next hop via the
-        `neighbor 10.255.255.1 next-hop-self` statement. While this
-        scenario is only 2 iBGP peers, in a network fabric with several
-        iBGP peers, a switch inside an AS (and not on an edge) may not
-        have a route to a switch in any external AS.
-        ::::
+    4.  Validate the configuration and neighbor establishment
 
-    d.  Validate the configuration and neighbor establishment
-
-        ``` {.text emphasize-lines="1,11"}
+        ``` text hl_lines="1 11"
         s1-leaf4(config-router-bgp)#show active
         router bgp 65102
            router-id 10.111.254.4
@@ -193,7 +164,7 @@ equivalent to `L3LS_s1-leaf4_complete`.
 4.  Configure networks on **s1-leaf4** to advertise to
     **s1-spine1/s1-spine2**
 
-    a.  Add the following networks to BGP announcements on **s1-leaf4**:
+    1.  Add the following networks to BGP announcements on **s1-leaf4**:
 
         ``` text
         router bgp 65102
@@ -201,10 +172,10 @@ equivalent to `L3LS_s1-leaf4_complete`.
            network 10.111.254.4/32
         ```
 
-    b.  Verify that these networks are being advertised to the other
+    2.  Verify that these networks are being advertised to the other
         Spines and Leafs
 
-        ``` {.text emphasize-lines="1,25,29,33,54-56,62-64,66,85,88"}
+        ``` text hl_lines="1 25 29 33 54-56 62-64 66 85 88"
         s1-leaf1#show ip route
 
            VRF: default
@@ -295,7 +266,7 @@ equivalent to `L3LS_s1-leaf4_complete`.
            B E      10.111.254.4/32 [200/0] via 10.111.1.0, Ethernet2
         ```
 
-    c.  Add in multiple paths by enabling ECMP, on **s1-leaf4**, jump
+    3.  Add in multiple paths by enabling ECMP, on **s1-leaf4**, jump
         into BGP configuration mode and add:
 
         ``` text
@@ -303,10 +274,10 @@ equivalent to `L3LS_s1-leaf4_complete`.
            maximum-paths 2
         ```
 
-    d.  Check the BGP and IP route tables on **s1-leaf4** as well as
+    4.  Check the BGP and IP route tables on **s1-leaf4** as well as
         each of the **Spines** and **Leafs**
 
-        ``` {.text emphasize-lines="1,26-27,34-35,38,53-54,61-62,64,83-84,89-90"}
+        ``` text hl_lines="1 26-27 34-35 38 53-54 61-62 64 83-84 89-90"
         s1-spine1#show ip route
 
            VRF: default
@@ -398,15 +369,10 @@ equivalent to `L3LS_s1-leaf4_complete`.
            B E      10.111.254.4/32 [200/0] via 10.111.1.5, Ethernet4
                                             via 10.111.1.7, Ethernet5
         ```
+        ???+ note
+            ECMP is now working - notice the new status code in the *show ip
+            bgp* output on s1-leaf4
 
-        :::: note
-        ::: title
-        Note
-        :::
-
-        ECMP is now working - notice the new status code in the [show ip
-        bgp]{.title-ref} output on s1-leaf4
-        ::::
 
 5.  Validate connectivity from **s1-host1** to **s1-host2**. From
     **s1-host1** execute:
@@ -416,7 +382,7 @@ equivalent to `L3LS_s1-leaf4_complete`.
     traceroute 10.111.134.202
     ```
 
-    a.  Verify **s1-leaf4**\'s IP address is in the traceroute path,
+    1.  Verify **s1-leaf4**\'s IP address is in the traceroute path,
         either interface 10.111.1.7 via **s1-spine1** or interface
         10.111.2.7 via **s1-spine2**. If traffic is hashing via
         **s1-leaf3**\'s 10.111.1.5 or 10.111.2.5 interfaces perform the
@@ -428,7 +394,7 @@ equivalent to `L3LS_s1-leaf4_complete`.
            neighbor 10.111.2.4 shutdown
         ```
 
-    b.  Rerun traceroute/verification from **s1-host1** to **s1-host2**
+    2.  Rerun traceroute/verification from **s1-host1** to **s1-host2**
         then revert the `shutdown` changes on **s1-leaf3**
 
         ``` text
@@ -439,7 +405,7 @@ equivalent to `L3LS_s1-leaf4_complete`.
 
 6.  Other BGP features to play with if you have time:
 
-    a.  Route Redistribution: For fun, do a
+    1.  Route Redistribution: For fun, do a
         `watch 1 diff show ip route | begin Gateway` on **s1-leaf1** &
         **s1-leaf2** and let those run while you execute the command
         `redistribute connected` below on **s1-leaf3**. You will see new
@@ -451,7 +417,7 @@ equivalent to `L3LS_s1-leaf4_complete`.
            redistribute connected
         ```
 
-    b.  Route Maps and Prefix-Lists: Below is an example of some basic
+    2.  Route Maps and Prefix-Lists: Below is an example of some basic
         Prefix-Lists and Route-Maps that can be used for BGP filtering.
         Note that this is just an example and will not impact route
         advertisement in the lab.
@@ -478,7 +444,7 @@ equivalent to `L3LS_s1-leaf4_complete`.
            neighbor UpstreamSP1 route-map InboundSP1 in
         ```
 
-    c.  BFD: BFD is a low-overhead, protocol-independent mechanism which
+    3.  BFD: BFD is a low-overhead, protocol-independent mechanism which
         adjacent systems can use instead for faster detection of faults
         in the path between them. BFD is a simple mechanism which
         detects the liveness of a connection between adjacent systems,
