@@ -6,37 +6,42 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://github.com/hazardsg/atd-mkdocs-labguides/ag_initial_configuration/</loc>
+         <loc>https://github.com/hazardsg/atd-mkdocs-labguides/arista_graduate/ag_initial_configuration/</loc>
          <lastmod>2024-04-02</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://github.com/hazardsg/atd-mkdocs-labguides/connecting/</loc>
+         <loc>https://github.com/hazardsg/atd-mkdocs-labguides/broadcaster_training/media_ip_intro/</loc>
          <lastmod>2024-04-02</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://github.com/hazardsg/atd-mkdocs-labguides/cvp_configlet/</loc>
+         <loc>https://github.com/hazardsg/atd-mkdocs-labguides/cloudvision_portal/cvp_configlet/</loc>
          <lastmod>2024-04-02</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://github.com/hazardsg/atd-mkdocs-labguides/l2ls/</loc>
+         <loc>https://github.com/hazardsg/atd-mkdocs-labguides/eos_configuration/connecting/</loc>
          <lastmod>2024-04-02</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://github.com/hazardsg/atd-mkdocs-labguides/media_ip_intro/</loc>
+         <loc>https://github.com/hazardsg/atd-mkdocs-labguides/eos_configuration/l2ls/</loc>
          <lastmod>2024-04-02</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://github.com/hazardsg/atd-mkdocs-labguides/programmability_connecting/</loc>
+         <loc>https://github.com/hazardsg/atd-mkdocs-labguides/eos_configuration/l3ls/</loc>
          <lastmod>2024-04-02</lastmod>
          <changefreq>daily</changefreq>
     </url>
     <url>
-         <loc>https://github.com/hazardsg/atd-mkdocs-labguides/tshoot_intro/</loc>
+         <loc>https://github.com/hazardsg/atd-mkdocs-labguides/programmability/programmability_connecting/</loc>
+         <lastmod>2024-04-02</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
+         <loc>https://github.com/hazardsg/atd-mkdocs-labguides/troubleshoot_training/tshoot_intro/</loc>
          <lastmod>2024-04-02</lastmod>
          <changefreq>daily</changefreq>
     </url>
