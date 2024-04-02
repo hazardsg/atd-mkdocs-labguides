@@ -1,6 +1,6 @@
 # VxLAN
 
-![image](images/vxlan/nested_vxlan_topo_1.png){.align-center}
+![image](../images/vxlan/nested_vxlan_topo_1.png)
 
 :::: note
 ::: title

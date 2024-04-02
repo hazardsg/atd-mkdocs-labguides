@@ -1,5 +1,5 @@
-site_name: Arista ATD v3
-site_url: https://github.com/hazardsg/atd-mkdocs-labguides/
+site_name: Arista ATD v3.0
+site_url: https://hazardsg.github.io/atd-mkdocs-labguides
 theme:
   name: material
   features:
@@ -56,6 +56,7 @@ nav:
     - Connecting: eos_configuration/connecting.md
     - Layer 2 Leaf-Spine: eos_configuration/l2ls.md
     - Layer 3 Leaf-Spine: eos_configuration/l3ls.md
+    - VxLAN: eos_configuration/vxlan.md
   - CloudVision Portal:
     - CVP Configlet, Change Control, and Rollback: cloudvision_portal/cvp_configlet.md
   - Programmability:

@@ -2,13 +2,12 @@
 
   ![Image title](../images/l2ls/nested_l2ls_topo.png)
   
-  1.  Log into the **LabAccess** jumpserver to prepare the lab
-    environment:
+  1.  Log into the **LabAccess** jumpserver to prepare the lab environment:
 
     1.  Type `l2ls` at the prompt. The script will configure the
         datacenter with the exception of **s1-leaf4**.
 
-    ???+ note
+    ???+ info
         Did you know the "l2ls" script is composed of Python code that
         uses the CloudVision REST API to automate the provisioning of
         CVP Configlets? The configlets that are configured via the REST
@@ -20,8 +19,7 @@
         The manually-entered commands below that are part of this lab
         are equivalent to `L2LS_s1-leaf4_complete`.
 
-2.  Prior to configuration, verify the current operational status of the
-    environment.
+1.  Prior to configuration, verify the current operational status of the environment.
     
     ???+ note
         Full commands will be typed for reference in lab steps, but
@@ -63,7 +61,7 @@
         34   MLAG Uplink - s1-spine1 and s1   disabled    Po34        -          up/-
         ```
 
-3.  Configure the MLAG domain on **s1-leaf4** using the following steps.
+2.  Configure the MLAG domain on **s1-leaf4** using the following steps.
 
     1.  Configure the layer 2 VLANs for host connectivity.
 
