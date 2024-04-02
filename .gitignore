@@ -1,3 +1,1 @@
-source/old/*
-source/old
-*.rst
+/venv
