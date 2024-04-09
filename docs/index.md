@@ -5,6 +5,7 @@
 * [Layer 2 Leaf-Spine](eos_configuration/l2ls.md)
 * [Layer 3 Leaf-Spine](eos_configuration/l3ls.md)
 * [VxLAN](eos_configuration/vxlan.md)
+* [L2 EVPN Services](eos_configuration/l2evpn.md)
 
 ## CloudVision Portal
 * [CVP Configlet, Change Control, and Rollback](cloudvision_portal/cvp_configlet.md)

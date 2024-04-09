@@ -1,42 +1,29 @@
 # L2 EVPN Services
 
-::: {.thumbnail align="center"}
-images/l2evpn/nested_l2evpn_topo_dual_dc.png
+![Image title](../images/l2evpn/nested_l2evpn_topo_dual_dc.png)
 
-Click image to enlarge
-:::
+???+ note
+    This lab exercise is focused on the VXLAN EVPN configuration. IP
+    addresses, MLAG and BGP Underlay are already configured.
 
-:::: note
-::: title
-Note
-:::
-
-This lab exercise is focused on the VXLAN EVPN configuration. IP
-addresses, MLAG and BGP Underlay are already configured.
-::::
 
 1.  Log into the **LabAccess** jumpserver:
 
-    a\. Type `97` to access additional lab, then `evpn-labs` at the
+    1. Type `97` to access additional lab, then `evpn-labs` at the
     prompt to access the EVPN VXLAN content. Then type `l2evpn` for the
     Layer 2 EVPN lab. The script will configure the datacenter with the
     exception of **s1-leaf4**.
 
-    > :::: note
-    > ::: title
-    > Note
-    > :::
-    >
-    > Did you know the "l2evpn" script is composed of Python code that
-    > uses the CloudVision Portal REST API to automate the provisioning
-    > of CVP Configlets. The configlets that are configured via the REST
-    > API are `L2EVPN_s1-spine1`, `L2EVPN_s1-spine2`, `L2EVPN_s1-leaf1`,
-    > `L2EVPN_s1-leaf2`, `L2EVPN_s1-leaf3`, `L2EVPN_s1-leaf4`.
-    > ::::
+        ???+ note
+            Did you know the "l2evpn" script is composed of Python code that
+            uses the CloudVision Portal REST API to automate the provisioning
+            of CVP Configlets. The configlets that are configured via the REST
+            API are `L2EVPN_s1-spine1`, `L2EVPN_s1-spine2`, `L2EVPN_s1-leaf1`,
+            `L2EVPN_s1-leaf2`, `L2EVPN_s1-leaf3`, `L2EVPN_s1-leaf4`.
 
 2.  On **s1-leaf4**, check if Multi-Agent Routing Protocols are enabled.
 
-    ``` {.text emphasize-lines="1,3,5"}
+    ``` text hl_lines="1 3 5"
     s1-leaf4#show run section service
     service routing protocols model multi-agent
     s1-leaf4#show ip route summary
@@ -73,32 +60,22 @@ addresses, MLAG and BGP Underlay are already configured.
        /8: 2         /24: 3        /30: 1        /31: 2        /32: 19
     ```
 
-    :::: note
-    ::: title
-    Note
-    :::
-
-    By default, EOS is using the GateD routing process. Activating
-    (ArBGP) is requiring a reboot. This has been done prior to the lab
-    buildout so no reboot is required here.
-    ::::
+    ???+ note
+        By default, EOS is using the GateD routing process. Activating
+        (ArBGP) is requiring a reboot. This has been done prior to the lab
+        buildout so no reboot is required here.
 
 3.  On **s1-leaf4**, check the following operational states before
     configuring EVPN constructs:
 
-    a.  Verify EOS MLAG operational details.
+    1.  Verify EOS MLAG operational details.
 
-        :::: note
-        ::: title
-        Note
-        :::
+        ???+ note 
+            The MLAG state between **s1-leaf4** and its peer **s1-leaf3**
+            will be inconsistent. This is expected as **s1-leaf3** is fully
+            configured and **s1-leaf4** is not as of yet.
 
-        The MLAG state between **s1-leaf4** and its peer **s1-leaf3**
-        will be inconsistent. This is expected as **s1-leaf3** is fully
-        configured and **s1-leaf4** is not as of yet.
-        ::::
-
-        ``` {.text emphasize-lines="1"}
+        ``` text hl_lines="1"
         s1-leaf4#show mlag
         MLAG Configuration:              
         domain-id                          :                MLAG
@@ -124,18 +101,13 @@ addresses, MLAG and BGP Underlay are already configured.
         Active-full                        :                   0
         ```
 
-    b.  Verify BGP operational details for Underlay:
+    2.  Verify BGP operational details for Underlay:
 
-        :::: note
-        ::: title
-        Note
-        :::
+        ???+ note
+            You should see 3 underlay sessions; one to each spine and one to
+            the MLAG peer for redundancy.
 
-        You should see 3 underlay sessions; one to each spine and one to
-        the MLAG peer for redundancy.
-        ::::
-
-        ``` {.text emphasize-lines="1"}
+        ``` text hl_lines="1"
         s1-leaf4#show ip bgp summary
         BGP summary information for VRF default
         Router identifier 10.111.254.4, local AS number 65102
@@ -146,18 +118,14 @@ addresses, MLAG and BGP Underlay are already configured.
         10.255.255.1 4 65102              8        10    0    0 00:00:07 Estab   10     10  
         ```
 
-    c.  Check the IP routing table:
+    3.  Check the IP routing table:
 
-        :::: note
-        ::: title
-        Note
-        :::
+        ???+ note
+            Notice that **s1-leaf4** has 2 ECMP paths for reaching
+            **s1-leaf1** or **s1-leaf2** loopacks.
 
-        Notice that **s1-leaf4** has 2 ECMP paths for reaching
-        **s1-leaf1** or **s1-leaf2** loopacks.
-        ::::
 
-        ``` {.text emphasize-lines="1,25,26,28,29,30,31"}
+        ``` text hl_lines="1 25 26 28 29 30 31"
         s1-leaf4#show ip route
 
         VRF: default
@@ -197,29 +165,24 @@ addresses, MLAG and BGP Underlay are already configured.
 
 4.  On **s1-leaf4**, configure the BGP EVPN control-plane.
 
-    a.  Configure the EVPN control plane.
+    1.  Configure the EVPN control plane.
 
-        :::: note
-        ::: title
-        Note
-        :::
+        ???+ note
+            In this lab, the Spines serve as EVPN Route Servers. They
+            receive the EVPN Routes from each leaf and, due to our eBGP
+            setup, will naturally pass them along the other leaves.
 
-        In this lab, the Spines serve as EVPN Route Servers. They
-        receive the EVPN Routes from each leaf and, due to our eBGP
-        setup, will naturally pass them along the other leaves.
+            Also note that BGP standard and extended communities are
+            explicitly enabled on the peering. EVPN makes use of extended
+            BGP communities for route signaling and standard communities
+            allow for various other functions such as BGP maintenance mode.
 
-        Also note that BGP standard and extended communities are
-        explicitly enabled on the peering. EVPN makes use of extended
-        BGP communities for route signaling and standard communities
-        allow for various other functions such as BGP maintenance mode.
-
-        Lastly, note in this setup we use eBGP-multihop peerings with
-        the Loopback0 interfaces of each switch. This follows Arista
-        best-practice designs for separation of Underlay (peerings done
-        using physical Ethernet interfaces) and Overlay (peerings done
-        using Loopbacks) when leveraging eBGP. Other options exist and
-        can be discussed with your Arista SE.
-        ::::
+            Lastly, note in this setup we use eBGP-multihop peerings with
+            the Loopback0 interfaces of each switch. This follows Arista
+            best-practice designs for separation of Underlay (peerings done
+            using physical Ethernet interfaces) and Overlay (peerings done
+            using Loopbacks) when leveraging eBGP. Other options exist and
+            can be discussed with your Arista SE.
 
         ``` text
         router bgp 65102
@@ -235,10 +198,10 @@ addresses, MLAG and BGP Underlay are already configured.
                neighbor SPINE-EVPN activate
         ```
 
-    b.  Verify the EVPN Control-Plane is established to both Spine
+    2.  Verify the EVPN Control-Plane is established to both Spine
         peers.
 
-        ``` {.text emphasize-lines="1"}
+        ``` text hl_lines="1"
         s1-leaf4(config-router-bgp)#show bgp evpn summary 
         BGP summary information for VRF default
         Router identifier 10.111.254.4, local AS number 65102
@@ -250,18 +213,13 @@ addresses, MLAG and BGP Underlay are already configured.
 
 5.  On **s1-leaf4**, configure the VXLAN data-plane for transport.
 
-    a.  Configure Loopback1 with the shared IP of **s1-leaf3**.
+    1.  Configure Loopback1 with the shared IP of **s1-leaf3**.
 
-        :::: note
-        ::: title
-        Note
-        :::
-
-        This is referred to as an MLAG VTEP. The MLAG peer leafs provide
-        redundancy by sharing the Loopback1 IP and jointly advertising
-        reachability for it. Route redistribution has already been
-        configured for the underlay.
-        ::::
+        ???+ note
+            This is referred to as an MLAG VTEP. The MLAG peer leafs provide
+            redundancy by sharing the Loopback1 IP and jointly advertising
+            reachability for it. Route redistribution has already been
+            configured for the underlay.
 
         ``` text
         interface Loopback1
@@ -269,16 +227,11 @@ addresses, MLAG and BGP Underlay are already configured.
            ip address 10.111.253.3/32
         ```
 
-    b.  Configure the Vxlan1 interface with the Loopback1 as the source.
+    2.  Configure the Vxlan1 interface with the Loopback1 as the source.
 
-        :::: note
-        ::: title
-        Note
-        :::
-
-        This is the logical interface that will provide VXLAN header
-        encap and decap functions.
-        ::::
+        ???+ note
+            This is the logical interface that will provide VXLAN header
+            encap and decap functions.
 
         ``` text
         interface Vxlan1
@@ -287,53 +240,44 @@ addresses, MLAG and BGP Underlay are already configured.
 
 6.  Configure a Layer 2 EVPN service on **s1-leaf4**.
 
-    a.  Add the local Layer 2 VLAN with an ID of 112.
+    1.  Add the local Layer 2 VLAN with an ID of 112.
 
         ``` text
         vlan 112
            name Host_Network_112
         ```
 
-    b.  Map the local Layer 2 VLAN with a matching VNI.
+    2.  Map the local Layer 2 VLAN with a matching VNI.
 
-        :::: note
-        ::: title
-        Note
-        :::
+        ???+ note
+            This is how the switch understands which local Layer 2 VLAN maps
+            to which VNI in the overlay. The example shows matching them one
+            to one, but any scheme or method is valid, such as adding 10000
+            to the VLAN ID.
 
-        This is how the switch understands which local Layer 2 VLAN maps
-        to which VNI in the overlay. The example shows matching them one
-        to one, but any scheme or method is valid, such as adding 10000
-        to the VLAN ID.
-        ::::
 
         ``` text
         interface Vxlan1
            vxlan vlan 112 vni 112
         ```
 
-    c.  Add the mac-vrf EVPN configuration for VLAN 112.
+    3.  Add the mac-vrf EVPN configuration for VLAN 112.
 
-        :::: note
-        ::: title
-        Note
-        :::
+        ???+ note
+            Here we configure a VLAN-based service with EVPN. It has two
+            components. The first is a route-distinguisher, or **RD** to
+            identify the router (or leaf switch) that is originating the
+            EVPN routes. This can be manually defined in the format of
+            **Number** : **Number**, such as **Loopback0** : **VLAN ID** or
+            as we do in this case, let EOS automatically allocate one.
 
-        Here we configure a VLAN-based service with EVPN. It has two
-        components. The first is a route-distinguisher, or **RD** to
-        identify the router (or leaf switch) that is originating the
-        EVPN routes. This can be manually defined in the format of
-        **Number** : **Number**, such as **Loopback0** : **VLAN ID** or
-        as we do in this case, let EOS automatically allocate one.
-
-        Second is the route-target, or **RT**. The **RT** is used by the
-        leaf switches in the network to determine if they should import
-        the advertised route into their local table(s). If they receive
-        an EVPN route, they check the **RT** value and see if they have
-        a matching **RT** configured in BGP. If they do, they import the
-        route into the associated mac-vrf (or VLAN). If they do not,
-        they ignore the route.
-        ::::
+            Second is the route-target, or **RT**. The **RT** is used by the
+            leaf switches in the network to determine if they should import
+            the advertised route into their local table(s). If they receive
+            an EVPN route, they check the **RT** value and see if they have
+            a matching **RT** configured in BGP. If they do, they import the
+            route into the associated mac-vrf (or VLAN). If they do not,
+            they ignore the route.
 
         ``` text
         router bgp 65102
@@ -344,7 +288,7 @@ addresses, MLAG and BGP Underlay are already configured.
               redistribute learned
         ```
 
-    d.  Configure the host-facing MLAG port.
+    4.  Configure the host-facing MLAG port.
 
         ``` text
         interface Port-Channel5
@@ -360,23 +304,18 @@ addresses, MLAG and BGP Underlay are already configured.
 7.  With the Layer 2 EVPN Service configured, verify the operational
     state.
 
-    a.  Check the VXLAN data-plane configuration.
+    1.  Check the VXLAN data-plane configuration.
 
-        :::: note
-        ::: title
-        Note
-        :::
+        ???+ note
+            Here we can see some useful commands for VXLAN verification.
+            `show vxlan config-sanity detail` verifies a number of standard
+            things locally and with the MLAG peer to ensure all basic
+            criteria are met. `show interfaces Vxlan1` provides a
+            consolidated series of outputs of operational VXLAN data such as
+            control-plane mode (EVPN in this case), VLAN to VNI mappings and
+            discovered VTEPs.
 
-        Here we can see some useful commands for VXLAN verification.
-        `show vxlan config-sanity detail` verifies a number of standard
-        things locally and with the MLAG peer to ensure all basic
-        criteria are met. `show interfaces Vxlan1` provides a
-        consolidated series of outputs of operational VXLAN data such as
-        control-plane mode (EVPN in this case), VLAN to VNI mappings and
-        discovered VTEPs.
-        ::::
-
-        ``` {.text emphasize-lines="1,24"}
+        ``` text hl_lines="1 24"
         s1-leaf4#show vxlan config-sanity detail 
         Category                            Result  Detail                                            
         ---------------------------------- -------- --------------------------------------------------
@@ -417,42 +356,37 @@ addresses, MLAG and BGP Underlay are already configured.
         MLAG Shared Router MAC is 0000.0000.0000 
         ```
 
-    b.  On **s1-leaf1** (and/or **s1-leaf2**) verify the IMET table to
+    2.  On **s1-leaf1** (and/or **s1-leaf2**) verify the IMET table to
         ensure **s1-leaf4** has been discovered in the overlay.
 
-        :::: note
-        ::: title
-        Note
-        :::
+        ???+ note
+            The Inclusive Multicast Ethernet Tag, or **IMET**, route is how
+            a VTEP advertises membership in a given Layer 2 service, or
+            VXLAN segment. This is also known as the EVPN Type 3 Route.
+            Other leaves receive this route, evaluate the **RT** to see if
+            they have a matching configuration and, if so, import the
+            advertising VTEP into their flood list for BUM traffic.
 
-        The Inclusive Multicast Ethernet Tag, or **IMET**, route is how
-        a VTEP advertises membership in a given Layer 2 service, or
-        VXLAN segment. This is also known as the EVPN Type 3 Route.
-        Other leaves receive this route, evaluate the **RT** to see if
-        they have a matching configuration and, if so, import the
-        advertising VTEP into their flood list for BUM traffic.
-        ::::
-
-        ``` {.text emphasize-lines="1,15,16,17,18,21,33,34"}
+        ``` text hl_lines="1 15 16 17 18 21 33 34"
         s1-leaf1#show bgp evpn route-type imet 
         BGP routing table information for VRF default
         Router identifier 10.111.254.1, local AS number 65101
-        Route status codes: s - suppressed, * - valid, > - active, E - ECMP head, e - ECMP
+        Route status codes: s - suppressed, * - valid, - active, E - ECMP head, e - ECMP
                             S - Stale, c - Contributing to ECMP, b - backup
                             % - Pending BGP convergence
         Origin codes: i - IGP, e - EGP, ? - incomplete
         AS Path Attributes: Or-ID - Originator ID, C-LST - Cluster List, LL Nexthop - Link Local Nexthop
 
                   Network                Next Hop              Metric  LocPref Weight  Path
-        * >Ec   RD: 10.111.254.3:112 imet 10.111.253.3
+        * Ec   RD: 10.111.254.3:112 imet 10.111.253.3
                                         10.111.253.3          -       100     0       65100 65102 i
         *  ec   RD: 10.111.254.3:112 imet 10.111.253.3
                                         10.111.253.3          -       100     0       65100 65102 i
-        * >Ec   RD: 10.111.254.4:112 imet 10.111.253.3
+        * Ec   RD: 10.111.254.4:112 imet 10.111.253.3
                                         10.111.253.3          -       100     0       65100 65102 i
         *  ec   RD: 10.111.254.4:112 imet 10.111.253.3
                                         10.111.253.3          -       100     0       65100 65102 i
-        * >     RD: 10.111.254.1:112 imet 10.111.253.1
+        *     RD: 10.111.254.1:112 imet 10.111.253.1
                                         -                     -       -       0       i    
         s1-leaf1#show interfaces Vxlan1
         Vxlan1 is up, line protocol is up (connected)
@@ -471,10 +405,10 @@ addresses, MLAG and BGP Underlay are already configured.
           MLAG Shared Router MAC is 0000.0000.0000
         ```
 
-    c.  Log into **s1-host1** and ping **s2-host2** to populate the
+    3.  Log into **s1-host1** and ping **s2-host2** to populate the
         network\'s MAC tables.
 
-        ``` {.text emphasize-lines="1"}
+        ``` text hl_lines="1"
         s1-host1#ping 10.111.112.202
         PING 10.111.112.202 (10.111.112.202) 72(100) bytes of data.
         80 bytes from 10.111.112.202: icmp_seq=1 ttl=64 time=16.8 ms
@@ -486,20 +420,15 @@ addresses, MLAG and BGP Underlay are already configured.
         5 packets transmitted, 5 received, 0% packet loss, time 61ms
         ```
 
-    d.  On **s1-leaf1**, check the local MAC address-table.
+    4.  On **s1-leaf1**, check the local MAC address-table.
 
-        :::: note
-        ::: title
-        Note
-        :::
+        ???+ note
+            The MAC addresses in your lab may differ as they are randomly
+            generated during the lab build. We see here that the MAC of
+            **s1-host2** has been learned via the Vxlan1 interface on
+            **s1-leaf1**.
 
-        The MAC addresses in your lab may differ as they are randomly
-        generated during the lab build. We see here that the MAC of
-        **s1-host2** has been learned via the Vxlan1 interface on
-        **s1-leaf1**.
-        ::::
-
-        ``` {.text emphasize-lines="1,8"}
+        ``` text hl_lines="1 8"
         s1-leaf1#show mac address-table dynamic 
         Mac Address Table
         ------------------------------------------------------------------
@@ -517,66 +446,57 @@ addresses, MLAG and BGP Underlay are already configured.
         Total Mac Addresses for this criterion: 0
         ```
 
-    e.  On **s1-leaf1**, check the EVPN control-plane for the associated
+    5.  On **s1-leaf1**, check the EVPN control-plane for the associated
         host MAC.
 
-        :::: note
-        ::: title
-        Note
-        :::
+        ???+ note
+            We see the MAC of **s1-host2** multiple times in the
+            control-plane due to our redundant MLAG and ECMP design. Both
+            **s1-leaf3** and **s1-leaf4** are attached to **s1-host2** and
+            therefore will generate this Type 2 EVPN route for its MAC. They
+            each then send this route up to the redundant Spines (or EVPN
+            Route Servers) which provides an ECMP path to the host.
 
-        We see the MAC of **s1-host2** multiple times in the
-        control-plane due to our redundant MLAG and ECMP design. Both
-        **s1-leaf3** and **s1-leaf4** are attached to **s1-host2** and
-        therefore will generate this Type 2 EVPN route for its MAC. They
-        each then send this route up to the redundant Spines (or EVPN
-        Route Servers) which provides an ECMP path to the host.
-        ::::
-
-        ``` {.text emphasize-lines="1,15,16,17,18,19,20,21,22"}
+        ``` text hl_lines="1 15 16 17 18 19 20 21 22"
         s1-leaf1#show bgp evpn route-type mac-ip 
         BGP routing table information for VRF default
         Router identifier 10.111.254.1, local AS number 65101
-        Route status codes: s - suppressed, * - valid, > - active, E - ECMP head, e - ECMP
+        Route status codes: s - suppressed, * - valid, - active, E - ECMP head, e - ECMP
                             S - Stale, c - Contributing to ECMP, b - backup
                             % - Pending BGP convergence
         Origin codes: i - IGP, e - EGP, ? - incomplete
         AS Path Attributes: Or-ID - Originator ID, C-LST - Cluster List, LL Nexthop - Link Local Nexthop 
 
                   Network                Next Hop              Metric  LocPref Weight  Path
-        * >     RD: 10.111.254.1:112 mac-ip 001c.73c0.c616
+        *     RD: 10.111.254.1:112 mac-ip 001c.73c0.c616
                                         -                     -       -       0       i
-        * >     RD: 10.111.254.1:112 mac-ip 001c.73c0.c616 10.111.112.201
+        *     RD: 10.111.254.1:112 mac-ip 001c.73c0.c616 10.111.112.201
                                         -                     -       -       0       i
-        * >Ec   RD: 10.111.254.3:112 mac-ip 001c.73c0.c617
+        * Ec   RD: 10.111.254.3:112 mac-ip 001c.73c0.c617
                                         10.111.253.3          -       100     0       65100 65102 i
         *  ec   RD: 10.111.254.3:112 mac-ip 001c.73c0.c617
                                         10.111.253.3          -       100     0       65100 65102 i
-        * >Ec   RD: 10.111.254.4:112 mac-ip 001c.73c0.c617
+        * Ec   RD: 10.111.254.4:112 mac-ip 001c.73c0.c617
                                         10.111.253.3          -       100     0       65100 65102 i
         *  ec   RD: 10.111.254.4:112 mac-ip 001c.73c0.c617
                                         10.111.253.3          -       100     0       65100 65102 i
         ```
 
-    f.  On **s1-leaf1**, check the VXLAN data-plane for MAC address.
+    6.  On **s1-leaf1**, check the VXLAN data-plane for MAC address.
 
-        :::: note
-        ::: title
-        Note
-        :::
+        ???+ note
+            Though both **s1-leaf3** and **s1-leaf4** are advertising the
+            MAC of **s1-host2** recall that they have a shared MLAG VTEP IP
+            for VXLAN reachability. Therefore we only see one possible
+            destination for this host MAC. The
+            `show l2rib output mac <MAC of remote host` command then allows
+            us to see the VTEP info in the hardware. Finally we can verify
+            the ECMP path to the remote MLAG VTEP via **s1-spine1** and
+            **s1-spine2** with a simple `show ip route 10.111.253.3`
+            command.
 
-        Though both **s1-leaf3** and **s1-leaf4** are advertising the
-        MAC of **s1-host2** recall that they have a shared MLAG VTEP IP
-        for VXLAN reachability. Therefore we only see one possible
-        destination for this host MAC. The
-        `show l2rib output mac <MAC of remote host>` command then allows
-        us to see the VTEP info in the hardware. Finally we can verify
-        the ECMP path to the remote MLAG VTEP via **s1-spine1** and
-        **s1-spine2** with a simple `show ip route 10.111.253.3`
-        command.
-        ::::
 
-        ``` {.text emphasize-lines="1,7,9,12"}
+        ``` text hl_lines="1 7 9 12"
         s1-leaf1#show vxlan address-table evpn 
           Vxlan Mac Address Table
         ----------------------------------------------------------------------
