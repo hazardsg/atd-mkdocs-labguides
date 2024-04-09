@@ -849,24 +849,17 @@
 
 <h1 id="vxlan">VxLAN</h1>
 <p><img alt="image" src="../../images/vxlan/nested_vxlan_topo_1.png" /></p>
-<p>:::: note
-::: title
-Note
-:::</p>
+<details class="note" open="open">
+<summary>Note</summary>
 <p>Did you know the <code>vxlan</code> script is composed of Python code that uses the
 CloudVision Portal REST API to automate the provisioning of CVP
 configlets. The configlets that are configured via the REST API are
 <code>VXLAN_s1-spine1</code>, <code>VXLAN_s1-spine2</code>, <code>VXLAN_s1-leaf1</code>,
 <code>VXLAN_s1-leaf2</code>, <code>VXLAN_s1-leaf3</code>, <code>VXLAN_s1-leaf4</code>. In addition each
-leaf also gets the <code>VLANs</code> configlet.
-::::</p>
-<p>:::: note
-::: title
-Note
-:::</p>
+leaf also gets the <code>VLANs</code> configlet.</p>
+</details>
 <p>The manually-entered commands below that are part of this lab are
-equivalent to <code>VXLAN_s1-leaf4_complete</code>.
-::::</p>
+equivalent to <code>VXLAN_s1-leaf4_complete</code></p>
 <ol>
 <li>
 <p>Log into the LabAccess jumpserver:</p>
@@ -877,7 +870,6 @@ equivalent to <code>VXLAN_s1-leaf4_complete</code>.
 </li>
 <li>
 <p>On <strong>s1-leaf4</strong>, configure Port-channels connecting to <strong>s1-host2</strong></p>
-<blockquote>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>configure
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>interface port-channel 5
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>    description MLAG - HOST2
@@ -889,13 +881,11 @@ equivalent to <code>VXLAN_s1-leaf4_complete</code>.
 </span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>    channel-group 5 mode active
 </span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>    lacp timer fast
 </span></code></pre></div>
-</blockquote>
 </li>
 <li>
 <p>Verify MLAG on <strong>s1-leaf4</strong></p>
-<blockquote>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>s1-leaf4(config)#show mlag
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>MLAG Configuration:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="hll">s1-leaf4(config)#show mlag
+</span></span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>MLAG Configuration:
 </span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>domain-id                          :                MLAG
 </span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>local-interface                    :            Vlan4094
 </span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>peer-address                       :        10.255.255.1
@@ -918,14 +908,14 @@ equivalent to <code>VXLAN_s1-leaf4_complete</code>.
 </span><span id="__span-1-22"><a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a>Active-partial                     :                   0
 </span><span id="__span-1-23"><a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a>Active-full                        :                   1
 </span><span id="__span-1-24"><a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a>
-</span><span id="__span-1-25"><a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a>s1-leaf4(config)#show mlag interfaces
-</span><span id="__span-1-26"><a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a>                                                                 local/remote
+</span><span id="__span-1-25"><a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a><span class="hll">s1-leaf4(config)#show mlag interfaces
+</span></span><span id="__span-1-26"><a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a>                                                                 local/remote
 </span><span id="__span-1-27"><a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a>   mlag       desc             state       local       remote          status
 </span><span id="__span-1-28"><a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a>---------- ---------- ----------------- ----------- ------------ ------------
 </span><span id="__span-1-29"><a id="__codelineno-1-29" name="__codelineno-1-29" href="#__codelineno-1-29"></a>      5       MLAG - HOST2        active-full         Po5          Po5           up/up
 </span><span id="__span-1-30"><a id="__codelineno-1-30" name="__codelineno-1-30" href="#__codelineno-1-30"></a>
-</span><span id="__span-1-31"><a id="__codelineno-1-31" name="__codelineno-1-31" href="#__codelineno-1-31"></a>s1-leaf4(config)#show port-channel dense
-</span><span id="__span-1-32"><a id="__codelineno-1-32" name="__codelineno-1-32" href="#__codelineno-1-32"></a>
+</span><span id="__span-1-31"><a id="__codelineno-1-31" name="__codelineno-1-31" href="#__codelineno-1-31"></a><span class="hll">s1-leaf4(config)#show port-channel dense
+</span></span><span id="__span-1-32"><a id="__codelineno-1-32" name="__codelineno-1-32" href="#__codelineno-1-32"></a>
 </span><span id="__span-1-33"><a id="__codelineno-1-33" name="__codelineno-1-33" href="#__codelineno-1-33"></a>        Flags
 </span><span id="__span-1-34"><a id="__codelineno-1-34" name="__codelineno-1-34" href="#__codelineno-1-34"></a>-------------------------- ----------------------------- -------------------------
 </span><span id="__span-1-35"><a id="__codelineno-1-35" name="__codelineno-1-35" href="#__codelineno-1-35"></a>   a - LACP Active            p - LACP Passive           * - static fallback
@@ -943,15 +933,13 @@ equivalent to <code>VXLAN_s1-leaf4_complete</code>.
 </span><span id="__span-1-47"><a id="__codelineno-1-47" name="__codelineno-1-47" href="#__codelineno-1-47"></a>   Port-Channel       Protocol    Ports
 </span><span id="__span-1-48"><a id="__codelineno-1-48" name="__codelineno-1-48" href="#__codelineno-1-48"></a>------------------ -------------- ------------------
 </span><span id="__span-1-49"><a id="__codelineno-1-49" name="__codelineno-1-49" href="#__codelineno-1-49"></a>   Po1(U)             LACP(a)     Et1(PG+) Et6(PG+)
-</span><span id="__span-1-50"><a id="__codelineno-1-50" name="__codelineno-1-50" href="#__codelineno-1-50"></a>   Po5(U)             LACP(a)     Et4(PSG+) PEt4(P)
-</span></code></pre></div>
-</blockquote>
+</span><span id="__span-1-50"><a id="__codelineno-1-50" name="__codelineno-1-50" href="#__codelineno-1-50"></a><span class="hll">   Po5(U)             LACP(a)     Et4(PSG+) PEt4(P)
+</span></span></code></pre></div>
 </li>
 <li>
 <p>Validate BGP operation <strong>s1-leaf4</strong></p>
-<blockquote>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>s1-leaf4(config)#sh run sec bgp
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>router bgp 65102
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="hll">s1-leaf4(config)#sh run sec bgp
+</span></span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>   router bgp 65102
 </span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>   router-id 10.111.254.4
 </span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>   maximum-paths 2
 </span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>   neighbor SPINE peer group
@@ -965,8 +953,8 @@ equivalent to <code>VXLAN_s1-leaf4_complete</code>.
 </span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>   network 10.111.134.0/24
 </span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>   network 10.111.254.4/32
 </span><span id="__span-2-15"><a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>
-</span><span id="__span-2-16"><a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>s1-leaf4(config)#show ip route bgp
-</span><span id="__span-2-17"><a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>
+</span><span id="__span-2-16"><a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a><span class="hll">s1-leaf4(config)#show ip route bgp
+</span></span><span id="__span-2-17"><a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>
 </span><span id="__span-2-18"><a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a>VRF: default
 </span><span id="__span-2-19"><a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a>Codes: C - connected, S - static, K - kernel,
 </span><span id="__span-2-20"><a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a>       O - OSPF, IA - OSPF inter area, E1 - OSPF external type 1,
@@ -993,8 +981,8 @@ equivalent to <code>VXLAN_s1-leaf4_complete</code>.
 </span><span id="__span-2-41"><a id="__codelineno-2-41" name="__codelineno-2-41" href="#__codelineno-2-41"></a>                           via 10.111.2.6, Ethernet3
 </span><span id="__span-2-42"><a id="__codelineno-2-42" name="__codelineno-2-42" href="#__codelineno-2-42"></a> B I      10.111.254.3/32 [200/0] via 10.255.255.1, Vlan4094        
 </span><span id="__span-2-43"><a id="__codelineno-2-43" name="__codelineno-2-43" href="#__codelineno-2-43"></a>
-</span><span id="__span-2-44"><a id="__codelineno-2-44" name="__codelineno-2-44" href="#__codelineno-2-44"></a>s1-leaf4(config)#show ip interface brief
-</span><span id="__span-2-45"><a id="__codelineno-2-45" name="__codelineno-2-45" href="#__codelineno-2-45"></a>                                                                                Address
+</span><span id="__span-2-44"><a id="__codelineno-2-44" name="__codelineno-2-44" href="#__codelineno-2-44"></a><span class="hll">s1-leaf4(config)#show ip interface brief
+</span></span><span id="__span-2-45"><a id="__codelineno-2-45" name="__codelineno-2-45" href="#__codelineno-2-45"></a>                                                                                Address
 </span><span id="__span-2-46"><a id="__codelineno-2-46" name="__codelineno-2-46" href="#__codelineno-2-46"></a>Interface         IP Address            Status       Protocol            MTU    Owner
 </span><span id="__span-2-47"><a id="__codelineno-2-47" name="__codelineno-2-47" href="#__codelineno-2-47"></a>----------------- --------------------- ------------ -------------- ----------- -------
 </span><span id="__span-2-48"><a id="__codelineno-2-48" name="__codelineno-2-48" href="#__codelineno-2-48"></a>Ethernet2         10.111.1.7/31         up           up                 1500
@@ -1005,8 +993,8 @@ equivalent to <code>VXLAN_s1-leaf4_complete</code>.
 </span><span id="__span-2-53"><a id="__codelineno-2-53" name="__codelineno-2-53" href="#__codelineno-2-53"></a>Vlan134           10.111.134.1/24       up           up                 1500
 </span><span id="__span-2-54"><a id="__codelineno-2-54" name="__codelineno-2-54" href="#__codelineno-2-54"></a>Vlan4094          10.255.255.2/30       up           up                 1500
 </span><span id="__span-2-55"><a id="__codelineno-2-55" name="__codelineno-2-55" href="#__codelineno-2-55"></a>
-</span><span id="__span-2-56"><a id="__codelineno-2-56" name="__codelineno-2-56" href="#__codelineno-2-56"></a>s1-leaf4(config)#show ip bgp summary
-</span><span id="__span-2-57"><a id="__codelineno-2-57" name="__codelineno-2-57" href="#__codelineno-2-57"></a>BGP summary information for VRF default
+</span><span id="__span-2-56"><a id="__codelineno-2-56" name="__codelineno-2-56" href="#__codelineno-2-56"></a><span class="hll">s1-leaf4(config)#show ip bgp summary
+</span></span><span id="__span-2-57"><a id="__codelineno-2-57" name="__codelineno-2-57" href="#__codelineno-2-57"></a>BGP summary information for VRF default
 </span><span id="__span-2-58"><a id="__codelineno-2-58" name="__codelineno-2-58" href="#__codelineno-2-58"></a>Router identifier 10.111.254.4, local AS number 65102
 </span><span id="__span-2-59"><a id="__codelineno-2-59" name="__codelineno-2-59" href="#__codelineno-2-59"></a>Neighbor Status Codes: m - Under maintenance
 </span><span id="__span-2-60"><a id="__codelineno-2-60" name="__codelineno-2-60" href="#__codelineno-2-60"></a>  Neighbor     V AS           MsgRcvd   MsgSent  InQ OutQ  Up/Down State   PfxRcd PfxAcc
@@ -1014,26 +1002,20 @@ equivalent to <code>VXLAN_s1-leaf4_complete</code>.
 </span><span id="__span-2-62"><a id="__codelineno-2-62" name="__codelineno-2-62" href="#__codelineno-2-62"></a>  10.111.2.6   4 65100            329       332    0    0 04:34:58 Estab   6      6
 </span><span id="__span-2-63"><a id="__codelineno-2-63" name="__codelineno-2-63" href="#__codelineno-2-63"></a>  10.255.255.1 4 65102            335       333    0    0 04:34:46 Estab   11     11
 </span></code></pre></div>
-</blockquote>
-</li>
-</ol>
-<p>:::: note
-::: title
-Note
-:::</p>
+<details class="note" open="open">
+<summary>Note</summary>
 <p><code>show ip bgp summary</code> will show that the BGP neighbors have moved to
 <code>Estab</code> state. Note the iBGP peering between Leaf3 &amp; Leaf4. Also note
 the route to the shared loopback1 of Leaf1 &amp; Leaf2. This is the remote
-VTEP on the other side of the leaf-spine network.
-::::</p>
-<ol>
+VTEP on the other side of the leaf-spine network.</p>
+</details>
+</li>
 <li>
 <p>Create Loopback 1 and the VXLAN VTEP (VTI) interfaces on
     <strong>s1-leaf4</strong></p>
 <ol>
 <li>
 <p>Configuration</p>
-<blockquote>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>configure
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>interface Loopback1
 </span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>  ip address 10.111.253.3/32
@@ -1043,46 +1025,41 @@ VTEP on the other side of the leaf-spine network.
 </span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>  vxlan vlan 112 vni 112
 </span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>  vxlan flood vtep 10.111.253.1 
 </span></code></pre></div>
-</blockquote>
-<p>:::: note
-::: title
-Note
-:::</p>
+<details class="note" open="open">
+<summary>Note</summary>
 <p><code>vxlan flood vtep 10.111.253.1</code> adds the shared loopback1 IP
 address on Leaf1 &amp; Leaf2 to the HER list. Note that for
 autodiscovery of VTEPs, one must use BGP eVPN (see eVPN labs) or
-CVX (see CVX lab).
-::::</p>
+CVX (see CVX lab).</p>
+</details>
 </li>
 <li>
 <p>Verification</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="hll">s1-leaf4(config)#show run int vxlan1
+</span></span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>interface Vxlan1
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>vxlan source-interface Loopback1
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>vxlan udp-port 4789
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>vxlan vlan 112 vni 112
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>vxlan flood vtep 10.111.253.1
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="hll">s1-leaf4(config-if-Vx1)#sh int vxlan 1
+</span></span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>Vxlan1 is up, line protocol is up (connected)
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>Hardware is Vxlan
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>Source interface is Loopback1 and is active with 10.111.253.3
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>Replication/Flood Mode is headend with Flood List Source: CLI
+</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>Remote MAC learning via Datapath
+</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>VNI mapping to VLANs
+</span><span id="__span-4-15"><a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a>Static VLAN to VNI mapping is
+</span><span id="__span-4-16"><a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>    [12, 112]
+</span><span id="__span-4-17"><a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a>Note: All Dynamic VLANs used by VCS are internal VLANs.
+</span><span id="__span-4-18"><a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a>        Use &#39;show vxlan vni&#39; for details.
+</span><span id="__span-4-19"><a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a>Static VRF to VNI mapping is not configured
+</span><span id="__span-4-20"><a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a>Headend replication flood vtep list is:
+</span><span id="__span-4-21"><a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a>    12 10.111.253.1
+</span><span id="__span-4-22"><a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a>MLAG Shared Router MAC is 0000.0000.0000
+</span></code></pre></div>
 </li>
 </ol>
-<blockquote>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>s1-leaf4(config)#show run int vxlan1
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>interface Vxlan1
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>   vxlan source-interface Loopback1
-</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>   vxlan udp-port 4789
-</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>   vxlan vlan 112 vni 112
-</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>   vxlan flood vtep 10.111.253.1
-</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>
-</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>s1-leaf4(config-if-Vx1)#sh int vxlan 1
-</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>  Vxlan1 is up, line protocol is up (connected)
-</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>  Hardware is Vxlan
-</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>  Source interface is Loopback1 and is active with 10.111.253.3
-</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>  Replication/Flood Mode is headend with Flood List Source: CLI
-</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>  Remote MAC learning via Datapath
-</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>  VNI mapping to VLANs
-</span><span id="__span-4-15"><a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a>  Static VLAN to VNI mapping is
-</span><span id="__span-4-16"><a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>     [12, 112]
-</span><span id="__span-4-17"><a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a>  Note: All Dynamic VLANs used by VCS are internal VLANs.
-</span><span id="__span-4-18"><a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a>        Use &#39;show vxlan vni&#39; for details.
-</span><span id="__span-4-19"><a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a>  Static VRF to VNI mapping is not configured
-</span><span id="__span-4-20"><a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a>  Headend replication flood vtep list is:
-</span><span id="__span-4-21"><a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a>     12 10.111.253.1
-</span><span id="__span-4-22"><a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a>  MLAG Shared Router MAC is 0000.0000.0000
-</span></code></pre></div>
-</blockquote>
 </li>
 <li>
 <p>Log into <strong>s1-host1</strong> and <strong>s1-host2</strong>, ping the vARP VIP and the
@@ -1090,55 +1067,43 @@ CVX (see CVX lab).
 <ol>
 <li>
 <p>Host 1 ping tests. From <strong>s1-host1</strong>:</p>
-<blockquote>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>ping 10.111.112.1
 </span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>ping 10.111.112.202
 </span></code></pre></div>
-</blockquote>
-<p>:::: note
-::: title
-Note
-:::</p>
+<details class="note" open="open">
+<summary>Note</summary>
 <p>The TTL in the ping outputs above. Even though .202 is many
 switches away, it appears locally connected and has the same TTL
 as the ping to .1. It\'s also interesting to realize that due to
 MLAG hashing of both the ARP requests and ping packet flows that
 pings to the SVI addresses of .2 &amp; .3 may or may not work. Do
-you know why?
-::::</p>
+you know why?</p>
+</details>
 </li>
 <li>
 <p>Host 1 MAC/ARP information</p>
-<blockquote>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>s1-host1#show interfaces po1 | grep -i Hardware
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>  Hardware is Port-Channel, address is 001c.73c0.c616
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="hll">s1-host1#show interfaces po1 | grep -i Hardware
+</span></span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>  Hardware is Port-Channel, address is 001c.73c0.c616
 </span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>
-</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>s1-host1#show arp
-</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>Address         Age (sec)  Hardware Addr   Interface
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="hll">s1-host1#show arp
+</span></span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>Address         Age (sec)  Hardware Addr   Interface
 </span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>192.168.0.1       0:00:00  124e.b1e1.7180  Management0
 </span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>192.168.0.5       0:00:05  001c.73a0.c601  Management0
 </span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>10.111.112.1      0:38:05  001c.7300.0001  Port-Channel1
 </span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>10.111.112.202    0:14:05  001c.73c0.c617  Port-Channel1
 </span></code></pre></div>
-</blockquote>
-<p>:::: note
-::: title
-Note
-:::</p>
-<p>Note the MAC addresses returned by the commands above.
-::::</p>
+<details class="note" open="open">
+<summary>Note</summary>
+<p>Note the MAC addresses returned by the commands above.</p>
+</details>
 </li>
 <li>
 <p>Host 2 ping tests. From <strong>s1-host2</strong>:</p>
-<blockquote>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>ping 10.111.112.1
 </span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>ping 10.111.112.201
 </span></code></pre></div>
-</blockquote>
-<p>:::: note
-::: title
-Note
-:::</p>
+<details class="note" open="open">
+<summary>Note</summary>
 <p>Note the TTL in the ping outputs above. Even though .201 is many
 switches away, it appears locally connected and has the same TTL
 as the ping to .1. Also note that the vARP VIP (10.111.112.1)
@@ -1146,20 +1111,16 @@ address &amp; and vARP MAC address (00:1c:73:00:00:ff) are the
 <strong>same</strong> for both leaf pairs - this IP address is known as an
 AnyCast IP address. If a VM was motioning from <strong>s1-host1</strong> to
 <strong>s1-host2</strong> for maintenance, the default GW address nor the ARP
-cache on that VM need to change.
-::::</p>
+cache on that VM need to change.</p>
+</details>
 </li>
 <li>
 <p>Host 2 MAC/ARP information</p>
-<blockquote>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>show interface po1 | grep -i Hardware
 </span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>show arp
 </span></code></pre></div>
-</blockquote>
-<p>:::: note
-::: title
-Note
-:::</p>
+<details class="note" open="open">
+<summary>Note</summary>
 <p>Note the MAC addresses returned by the commands above and
 compare to the prior <code>grep</code> and <code>arp</code> commands and see that both
 hosts appear to each other as though they are on the same L2
@@ -1169,8 +1130,8 @@ the pings from <strong>host1</strong>, on another set of windows for
 <code>watch 1 diff show int e4 counter</code> and see how MLAG hashing
 across the different pings causes the packets to choose a
 particular member of the port-channel in both the outbound &amp;
-inbound ping flows.
-::::</p>
+inbound ping flows.</p>
+</details>
 </li>
 </ol>
 </li>
@@ -1179,9 +1140,8 @@ inbound ping flows.
 <ol>
 <li>
 <p>Verify the MAC addresses and the associated VTEP IP</p>
-<blockquote>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>s1-leaf1#show vxlan vtep
-</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>Remote VTEPS for Vxlan1:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="hll">s1-leaf1#show vxlan vtep
+</span></span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>Remote VTEPS for Vxlan1:
 </span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>
 </span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>VTEP               Tunnel Type(s)
 </span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>------------------ --------------
@@ -1189,8 +1149,8 @@ inbound ping flows.
 </span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>
 </span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>Total number of remote VTEPS:  1
 </span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>
-</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a>s1-leaf1#show vxlan address-table
-</span><span id="__span-9-11"><a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a>Vxlan Mac Address Table
+</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="hll">s1-leaf1#show vxlan address-table
+</span></span><span id="__span-9-11"><a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a>Vxlan Mac Address Table
 </span><span id="__span-9-12"><a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a>----------------------------------------------------------------------
 </span><span id="__span-9-13"><a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a>
 </span><span id="__span-9-14"><a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a>VLAN  Mac Address     Type      Prt  VTEP             Moves   Last Move
@@ -1198,8 +1158,8 @@ inbound ping flows.
 </span><span id="__span-9-16"><a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a> 112  001c.73c0.c617  DYNAMIC   Vx1  10.111.253.3     1       0:01:13 ago
 </span><span id="__span-9-17"><a id="__codelineno-9-17" name="__codelineno-9-17" href="#__codelineno-9-17"></a>Total Remote Mac Addresses for this criterion: 1
 </span></code></pre></div>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>s1-leaf4(config)#show vxlan vtep
-</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>Remote VTEPS for Vxlan1:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="hll">s1-leaf4(config)#show vxlan vtep
+</span></span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>Remote VTEPS for Vxlan1:
 </span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>
 </span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>VTEP               Tunnel Type(s)
 </span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>------------------ --------------
@@ -1207,8 +1167,8 @@ inbound ping flows.
 </span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>
 </span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>Total number of remote VTEPS:  1
 </span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>
-</span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a>s1-leaf4(config)#show vxlan address-table
-</span><span id="__span-10-11"><a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a>         Vxlan Mac Address Table
+</span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a><span class="hll">s1-leaf4(config)#show vxlan address-table
+</span></span><span id="__span-10-11"><a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a>         Vxlan Mac Address Table
 </span><span id="__span-10-12"><a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a>----------------------------------------------------------------------
 </span><span id="__span-10-13"><a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a>
 </span><span id="__span-10-14"><a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a>VLAN  Mac Address     Type      Prt  VTEP             Moves   Last Move
@@ -1216,38 +1176,31 @@ inbound ping flows.
 </span><span id="__span-10-16"><a id="__codelineno-10-16" name="__codelineno-10-16" href="#__codelineno-10-16"></a>112  001c.73c0.c616  DYNAMIC   Vx1  10.111.253.1     1       0:00:33 ago
 </span><span id="__span-10-17"><a id="__codelineno-10-17" name="__codelineno-10-17" href="#__codelineno-10-17"></a>Total Remote Mac Addresses for this criterion: 1
 </span></code></pre></div>
-</blockquote>
-<p>:::: note
-::: title
-Note
-:::</p>
+<details class="note" open="open">
+<summary>Note</summary>
 <p>For <code>show vxlan vtep</code> &amp; <code>show vxlan address-table</code> to be
 populated, the above <code>pings</code> need to have been active very
 recently so that the MAC addresses don\'t age out, and you\'ll
 notice that at least 1 (but not necessarily both) of the MLAG
 pair switches (<strong>s1-leaf1</strong> or <strong>s1-leaf2</strong>) will have knowledge
 of the remote VTEP. This is because this is the direction the
-pings (inbound &amp; outbound) last hashed.
-::::</p>
+pings (inbound &amp; outbound) last hashed.</p>
+</details>
 </li>
 <li>
 <p>Verify the MAC address and the associated interface</p>
-<blockquote>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>show mac address-table
 </span></code></pre></div>
-</blockquote>
 </li>
 </ol>
 </li>
 <li>
 <p>Let's run some other show commands and tests to poke around VxLAN.
     On <strong>s1-leaf1</strong> and <strong>s1-leaf4</strong> issue the following commands:</p>
-<blockquote>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>show interface vxlan 1
 </span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>show mac address-table
 </span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>show log
 </span></code></pre></div>
-</blockquote>
 </li>
 </ol>
 <p><strong>LAB COMPLETE!</strong></p>
