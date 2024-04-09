@@ -26,6 +26,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://hazardsg.github.io/atd-mkdocs-labguides/eos_configuration/l2evpn/</loc>
+         <lastmod>2024-04-09</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://hazardsg.github.io/atd-mkdocs-labguides/eos_configuration/l2ls/</loc>
          <lastmod>2024-04-09</lastmod>
          <changefreq>daily</changefreq>
