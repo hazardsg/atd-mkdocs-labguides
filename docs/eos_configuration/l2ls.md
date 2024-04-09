@@ -5,9 +5,9 @@
   1.  Log into the **LabAccess** jumpserver to prepare the lab environment:
 
     1.  Type `l2ls` at the prompt. The script will configure the
-        datacenter with the exception of **s1-leaf4**.
+        datacenter with the exception of **s1-leaf
 
-    ???+ info
+    ???+ note
         Did you know the "l2ls" script is composed of Python code that
         uses the CloudVision REST API to automate the provisioning of
         CVP Configlets? The configlets that are configured via the REST
