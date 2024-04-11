@@ -6,6 +6,9 @@
 * [Layer 3 Leaf-Spine](eos_configuration/l3ls.md)
 * [VxLAN](eos_configuration/vxlan.md)
 * [L2 EVPN Services](eos_configuration/l2evpn.md)
+* [L3 EVPN Services](eos_configuration/l3evpn.md)
+* [L2 and L3 EVPN - Symmetric IRB with MLAG](eos_configuration//l2l3evpn.md)
+* [L2 and L3 EVPN - Symmetric IRB with All-Active Multihoming](eos_configuration/l2l3evpn-aa.md)
 
 ## CloudVision Portal
 * [CVP Configlet, Change Control, and Rollback](cloudvision_portal/cvp_configlet.md)
